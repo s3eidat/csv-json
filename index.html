@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>CSV ⇄ JSON — Free CSV to JSON and JSON to CSV Converter | S3eidat Tools</title>
+<meta name="description" content="Convert CSV to JSON and JSON to CSV in your browser. RFC 4180 parsing with quotes and line breaks, delimiter auto-detect, header toggle, table preview, nested keys flattened with dots. Free, private, nothing uploaded.">
+<meta property="og:title" content="CSV ⇄ JSON — free, private converter">
+<meta property="og:description" content="CSV to JSON and back with a table preview. Runs 100% in your browser.">
+<meta property="og:image" content="screenshot.png">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+</head>
+<body data-tool="csv-json">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>CSV ⇄ JSON</h1>
+    <p>Convert CSV to JSON and JSON to CSV with a live table preview. Quoted fields, line breaks inside cells and any delimiter are handled properly.</p>
+  </section>
+
+  <section class="card stack">
+    <div class="row between">
+      <div class="seg" id="dir" role="group" aria-label="Direction">
+        <button aria-pressed="true" data-v="c2j">CSV → JSON</button>
+        <button aria-pressed="false" data-v="j2c">JSON → CSV</button>
+      </div>
+      <div class="row">
+        <button class="btn ghost small" id="sample">Sample</button>
+        <label class="btn ghost small" id="open">Open file<input type="file" accept=".csv,.tsv,.txt,.json,text/csv,application/json,text/plain" hidden></label>
+        <button class="btn ghost small" id="clear">Clear</button>
+      </div>
+    </div>
+
+    <div class="row cj-opts">
+      <label class="field">Delimiter
+        <select class="select" id="delim">
+          <option value="auto">Auto-detect</option>
+          <option value=",">Comma ,</option>
+          <option value=";">Semicolon ;</option>
+          <option value="&#9;">Tab</option>
+          <option value="|">Pipe |</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="header" checked> First row is a header</label>
+      <label class="check c2j-only"><input type="checkbox" id="types" checked> Detect numbers &amp; booleans</label>
+      <div class="seg c2j-only" id="shape" role="group" aria-label="JSON shape">
+        <button aria-pressed="true" data-v="objects">Array of objects</button>
+        <button aria-pressed="false" data-v="arrays">Array of arrays</button>
+      </div>
+      <label class="check j2c-only" hidden><input type="checkbox" id="safe" checked> Guard against spreadsheet formulas</label>
+      <label class="check j2c-only" hidden><input type="checkbox" id="bom"> Excel-friendly (UTF-8 BOM)</label>
+    </div>
+
+    <div class="grid-2 cj-io">
+      <label class="field"><span id="inLabel">CSV input</span>
+        <textarea class="textarea" id="input" dir="auto" spellcheck="false" placeholder="Paste CSV here, or drop a file"></textarea>
+      </label>
+      <div class="field">
+        <div class="row between"><span id="outLabel">JSON output</span>
+          <div class="row">
+            <button class="btn small" id="copy"><svg class="i"><use href="#i-copy"/></svg>Copy</button>
+            <button class="btn small" id="save"><svg class="i"><use href="#i-download"/></svg><span id="saveExt">.json</span></button>
+          </div>
+        </div>
+        <textarea class="textarea" id="output" dir="auto" spellcheck="false" readonly></textarea>
+      </div>
+    </div>
+    <div class="row"><span class="chip" id="status">Waiting for input</span><span class="faint" id="info"></span></div>
+  </section>
+
+  <section class="card mt stack">
+    <div class="row between"><h2>Table preview <small id="pvInfo"></small></h2></div>
+    <div class="tbl-wrap cj-preview" id="preview"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
